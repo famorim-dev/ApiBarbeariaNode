@@ -7,8 +7,10 @@ import loginUsuariosController from "../controller/auth/loginUsuariosController.
 import CadastrarBarbeiroController from "../controller/auth/cadastrarBarbeiroController.js";
 import VerificaToken from '../middleware/verificaToken.js'
 
+import { limiteAcessos } from "../middleware/limiteAcesso.js";
+
 router.post('/cadastrar', CadastrarUsuarioController.create)
-router.post('/login', loginUsuariosController.store)
+router.post('/login',limiteAcessos,  loginUsuariosController.store)
 router.post('/cadastrar-barbeiro',VerificaToken, CadastrarBarbeiroController.store)
 
 export default router
