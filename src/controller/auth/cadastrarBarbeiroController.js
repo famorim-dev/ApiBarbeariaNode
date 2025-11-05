@@ -4,6 +4,14 @@ import Usuarios from '../../model/usuarioModel.js'
 class CadastrarBarbeiroController{
     async store(req, res){
         try{
+            const idUser = req.user.id
+
+            const VeificaUsuario = await Usuarios.findByPk(idUser)
+            
+            if(!VeificaUsuario === 'ADMIN'){
+                res.status(400).json({message: "Somente Administradores podem cadastrar Barbeiros"})
+            }
+
             const {nome_usuario, email_usuario, senha_usuario} = req.body
 
             if (!nome_usuario?.trim() || !email_usuario?.trim() || !senha_usuario?.trim()){
