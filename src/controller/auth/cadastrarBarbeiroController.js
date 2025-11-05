@@ -1,7 +1,8 @@
-import Usuario from "../../model/usuarioModel.js"
+import Disponibilidade from '../../model/disponibilidadeModel.js'
+import Usuarios from '../../model/usuarioModel.js'
 
-class CadastrarUsuarioController{
-    async create(req, res){
+class CadastrarBarbeiroController{
+    async store(req, res){
         try{
             const {nome_usuario, email_usuario, senha_usuario} = req.body
 
@@ -14,8 +15,12 @@ class CadastrarUsuarioController{
                 return res.status(400).json({ message: "Email inválido" })
             }
 
-            const role = 'USER'
-            await Usuario.create({nome_usuario, email_usuario, senha_usuario, role})
+            const role = 'BARBEIRO'
+            const barbeiro = await Usuarios.create({nome_usuario, email_usuario, senha_usuario, role})
+
+            const dias = ['Ter', 'Qua', 'Qui', 'Sex', 'Sab']
+
+            await Disponibilidade.bulkCreate(dias.map(dia => ({user_id: barbeiro.id, dia_semana: dia,})))
             res.status(201).json({message: "Usuário criado!"})
         }catch(e){
             res.status(400).json({message: "Não foi possivel cadastrar este usuário"})
@@ -23,4 +28,4 @@ class CadastrarUsuarioController{
     }
 }
 
-export default new CadastrarUsuarioController()
+export default new CadastrarBarbeiroController()

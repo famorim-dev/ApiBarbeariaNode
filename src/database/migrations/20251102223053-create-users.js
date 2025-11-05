@@ -23,7 +23,7 @@ export default {
         allowNull: false
       },
       role:{
-        type: Sequelize.ENUM('USER', 'ADMIN'),
+        type: Sequelize.ENUM('USER', 'ADMIN', 'BARBEIRO'),
         defaultValue: 'USER',
         allowNull: false
       },
