@@ -4,12 +4,10 @@ import Usuarios from '../../model/usuarioModel.js'
 class CadastrarBarbeiroController{
     async store(req, res){
         try{
-            const idUser = req.user.id
+            const {role} = req.user
 
-            const VeificaUsuario = await Usuarios.findByPk(idUser)
-            
-            if(!VeificaUsuario === 'ADMIN'){
-                res.status(400).json({message: "Somente Administradores podem cadastrar Barbeiros"})
+            if( role !== 'ADMIN'){
+                return res.status(400).json({message: "Somente Administradores podem cadastrar Barbeiros"})
             }
 
             const {nome_usuario, email_usuario, senha_usuario} = req.body
@@ -23,8 +21,8 @@ class CadastrarBarbeiroController{
                 return res.status(400).json({ message: "Email inválido" })
             }
 
-            const role = 'BARBEIRO'
-            const barbeiro = await Usuarios.create({nome_usuario, email_usuario, senha_usuario, role})
+            const roleBarbeiro = 'BARBEIRO'
+            const barbeiro = await Usuarios.create({nome_usuario, email_usuario, senha_usuario, role: roleBarbeiro})
 
             const dias = ['Ter', 'Qua', 'Qui', 'Sex', 'Sab']
 
