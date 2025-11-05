@@ -22,6 +22,11 @@ export default {
         type: Sequelize.STRING(200),
         allowNull: false
       },
+      role:{
+        type: Sequelize.ENUM('USER', 'ADMIN'),
+        defaultValue: 'USER',
+        allowNull: false
+      },
       created_at_usuario: {
         type: Sequelize.DATE,
         allowNull: false,

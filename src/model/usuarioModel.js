@@ -48,6 +48,16 @@ class Usuarios extends Model{
                     }
                 }
             },
+            role:{
+                type: Sequelize.STRING,
+                allowNull: false,
+                validate: {
+                    isIn:{
+                        args: [['USER', 'ADMIN', 'BARBEIRO']],
+                        msg: 'role inválido'
+                    },
+                }
+            },
         },{
             sequelize,
             tableName: 'usuarios',
