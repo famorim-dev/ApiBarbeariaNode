@@ -3,7 +3,7 @@ import cors from 'cors'
 
 // import rotas
 import authRotas from "./src/routes/usuarioRouter.js"
-
+import agendaRotas from "./src/routes/agendamentoRouter.js"
 
 class App{
     constructor() {
@@ -17,6 +17,7 @@ class App{
     }
     router() {
         this.app.use('/auth', authRotas)
+        this.app.use('/agenda', agendaRotas)
     }
 }
 
